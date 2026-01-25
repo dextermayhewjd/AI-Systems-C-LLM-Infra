@@ -10,6 +10,7 @@
  */
 
 #include <algorithm>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -19,28 +20,14 @@
 const std::string COURSES_OFFERED_PATH = "student_output/courses_offered.csv";
 const std::string COURSES_NOT_OFFERED_PATH = "student_output/courses_not_offered.csv";
 
-/**
- * Represents a course a student can take in ExploreCourses.
- * You must fill in the types of the fields in this struct.
- * Hint: Remember what types C++ streams work with?!
- */
 struct Course {
-  /* STUDENT TODO */ title;
-  /* STUDENT TODO */ number_of_units;
-  /* STUDENT TODO */ quarter;
+   std::string title;
+   std::string number_of_units;
+   std::string quarter;
 };
 
-/**
- * (STUDENT TODO) Look at how the main function (at the bottom of this file)
- * calls `parse_csv`, `write_courses_offered`, and `write_courses_not_offered`.
- * Modify the signatures of these functions so that they work as intended, and then delete this
- * comment!
- */
 
 /**
- * Note:
- * We need to #include utils.cpp _after_ we declare the Course struct above
- * so that the code inside utils.cpp knows what a Course is.
  * Recall that #include literally copies and pastes file contents.
  */
 #include "utils.cpp"
@@ -58,8 +45,31 @@ struct Course {
  * @param filename The name of the file to parse.
  * @param courses  A vector of courses to populate.
  */
-void parse_csv(std::string filename, std::vector<Course> courses) {
-  /* (STUDENT TODO) Your code goes here... */
+void parse_csv(std::string filename, std::vector<Course>& courses) {
+  std::ifstream ifs(filename);
+  std::string line;
+  if (!ifs) 
+  {
+    std::cerr << "Failed to open file: " << filename << "\n";
+    return;
+  }
+
+  while(std::getline(ifs,line))
+  {
+    
+    auto splited_line = split(line,',');
+    
+    std::string title = splited_line.at(0);
+    if(title =="Title")
+    {
+      continue;
+    }
+    std::string number_of_units = splited_line.at(1);
+    std::string quarter = splited_line.at(2);
+
+    courses.push_back({title,number_of_units,quarter});
+
+  }
 }
 
 /**
@@ -80,9 +90,43 @@ void parse_csv(std::string filename, std::vector<Course> courses) {
  * @param all_courses A vector of all courses gotten by calling `parse_csv`.
  *                    This vector will be modified by removing all offered courses.
  */
-void write_courses_offered(std::vector<Course> all_courses) {
+void write_courses_offered(std::vector<Course>& all_courses) {
   /* (STUDENT TODO) Your code goes here... */
+  std::ofstream ofs(COURSES_OFFERED_PATH);
+  std::vector<Course> to_delete;
+
+  auto b = all_courses.begin();
+  auto e = all_courses.end();
+  if(ofs.is_open())
+  {
+    ofs<<"Title,Number of Units,Quarter"<<'\n';
+  }
+
+  for(auto it = b; it != e; ++it)
+  {
+    std::string title = it->title;
+    std::string units = it->number_of_units;
+    std::string quarter = (*it).quarter;
+
+      if (quarter != "null") 
+      {
+          if(ofs.is_open())
+          {
+          ofs<<title<<','<<units<<','<<quarter<<'\n';
+          to_delete.push_back(*it);   
+          }
+      }
+  }
+
+  for(auto& c: to_delete)
+  {
+    delete_elem_from_vector(all_courses,c);
+  }
+
 }
+
+
+
 
 /**
  * This function writes the courses NOT offered to the file
@@ -97,10 +141,37 @@ void write_courses_offered(std::vector<Course> all_courses) {
  *
  * @param unlisted_courses A vector of courses that are not offered.
  */
-void write_courses_not_offered(std::vector<Course> unlisted_courses) {
+void write_courses_not_offered(const std::vector<Course>& unlisted_courses) {
   /* (STUDENT TODO) Your code goes here... */
-}
+  std::ofstream ofs(COURSES_NOT_OFFERED_PATH);
+  if (!ofs) 
+  {
+    std::cerr << "Failed to open file: " << COURSES_NOT_OFFERED_PATH << "\n";
+    return;
+  }
 
+    if(ofs.is_open())
+  {
+    ofs<<"Title,Number of Units,Quarter"<<'\n';
+  }
+
+  std::string line;
+  auto b = unlisted_courses.begin();
+  auto e = unlisted_courses.end();
+
+  for(auto it = b; it != e; ++it)
+  {
+    std::string title = it->title;
+    std::string units = it->number_of_units;
+    std::string quarter = it->quarter;
+
+    ofs<<title<<','
+      <<units<<','
+      <<quarter<<'\n';
+  }
+
+
+}
 int main() {
   /* Makes sure you defined your Course struct correctly! */
   static_assert(is_valid_course<Course>, "Course struct is not correctly defined!");
