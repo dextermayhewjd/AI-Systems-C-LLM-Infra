@@ -7,7 +7,7 @@
 | Stanford | 2025 | [CS106L – Standard C++ Programming](https://web.stanford.edu/class/cs106l/) | 现代 C++ | RAII / Move / STL / 工程规范 | C++ 基础 | `cs106l-exercises/` |
 | Stanford | 2022 | [CS110 – Principles of Computer Systems](https://web.stanford.edu/class/cs110/) | 系统 | 进程 / 线程 / 同步 / IO | 系统基础 | `cs110-labs/` |
 | Stanford | 2025 | [CS149 – Parallel Computing](https://gfxcourses.stanford.edu/cs149/fall25) | 并行计算 | SIMD / GPU 并行 / Roofline | 性能优化 | `cs149-kernels/` |
-| CMU | 2025 | [15-418/15-618: Parallel Computer Architecture and Programming]（https://www.cs.cmu.edu/afs/cs/academic/class/15418-s25/www/schedule.html）| 并行计算 | SIMD / GPU 并行 / Roofline | 性能优化 | `cs149-kernels/` |
+| CMU | 2025 | [15-418/15-618: Parallel Computer Architecture and Programming, Spring 2025](https://www.cs.cmu.edu/afs/cs/academic/class/15418-s25/www/schedule.html) | 并行计算 | SIMD / GPU 并行 / Roofline | 性能优化 | `cs149-kernels/` |
 | Stanford | 2025 | [CS224N – Natural Language Processing](https://web.stanford.edu/class/cs224n/) | NLP | Transformer / 语言建模 | 模型理解 | `cs224n-notes/` |
 | Stanford | 2025 | [CS336 – Language Modeling from Scratch](https://stanford-cs336.github.io/spring2025/) | LLM 系统 | 从零实现 LLM / 训练与工程 | LLM 核心 | `llm-from-scratch/` |
 | MIT | 2024 | [6.5940 – TinyML & Efficient DL](https://hanlab.mit.edu/courses/2024-fall-65940) | 高效推理 | Quant / Prune / Efficient Inference | 推理优化 | `efficient-inference/` |
