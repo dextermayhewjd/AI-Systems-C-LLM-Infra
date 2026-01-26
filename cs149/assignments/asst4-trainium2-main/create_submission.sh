@@ -1,0 +1,1 @@
+tar -czvf asst4.tar.gz part1/kernels.py part2/conv2d.py
