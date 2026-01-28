@@ -6,6 +6,8 @@
 |----|----|----|----|----|----|----|
 | Stanford | 2025 | [CS106L – Standard C++ Programming](https://web.stanford.edu/class/cs106l/) | 现代 C++ | RAII / Move / STL / 工程规范 | C++ 基础 | `cs106l-exercises/` |
 | Stanford | 2022 | [CS110 – Principles of Computer Systems](https://web.stanford.edu/class/cs110/) | 系统 | 进程 / 线程 / 同步 / IO | 系统基础 | `cs110-labs/` |
+| UCB | 2020 | [CS61C: Great Ideas in Computer Architecture](https://web.stanford.edu/class/cs110/) | 系统 | 进程 / 线程 / 同步 / IO | 系统基础 | `cs110-labs/` |
+
 | Stanford | 2025 | [CS149 – Parallel Computing](https://gfxcourses.stanford.edu/cs149/fall25) | 并行计算 | SIMD / GPU 并行 / Roofline | 性能优化 | `cs149-kernels/` |
 | CMU | 2025 | [15-418/15-618: Parallel Computer Architecture and Programming, Spring 2023]([https://www.cs.cmu.edu/afs/cs/academic/class/15418-s25/www/schedule.html](https://www.cs.cmu.edu/afs/cs/academic/class/15418-s23/www/schedule.html)) | 并行计算 | SIMD / GPU 并行 / Roofline | 性能优化 | `cs149-kernels/` |
 | Stanford | 2025 | [CS224N – Natural Language Processing](https://web.stanford.edu/class/cs224n/) | NLP | Transformer / 语言建模 | 模型理解 | `cs224n-notes/` |

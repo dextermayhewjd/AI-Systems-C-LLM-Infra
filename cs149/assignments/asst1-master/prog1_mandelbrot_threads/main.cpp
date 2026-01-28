@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <algorithm>
 #include <getopt.h>
-
-#include "CycleTimer.h"
+#include <cstring>
+#include <chrono>
 
 extern void mandelbrotSerial(
     float x0, float y0, float x1, float y1,
@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
     const unsigned int width = 1600;
     const unsigned int height = 1200;
     const int maxIterations = 256;
-    int numThreads = 2;
+    int numThreads = 20;
 
     float x0 = -2;
     float x1 = 1;
@@ -130,10 +130,10 @@ int main(int argc, char** argv) {
     double minSerial = 1e30;
     for (int i = 0; i < 5; ++i) {
        memset(output_serial, 0, width * height * sizeof(int));
-        double startTime = CycleTimer::currentSeconds();
+        auto startTime = std::chrono::high_resolution_clock::now();
         mandelbrotSerial(x0, y0, x1, y1, width, height, 0, height, maxIterations, output_serial);
-        double endTime = CycleTimer::currentSeconds();
-        minSerial = std::min(minSerial, endTime - startTime);
+        auto endTime = std::chrono::high_resolution_clock::now();
+        minSerial = std::min(minSerial, std::chrono::duration_cast<std::chrono::duration<double>>(endTime - startTime).count());
     }
 
     printf("[mandelbrot serial]:\t\t[%.3f] ms\n", minSerial * 1000);
@@ -146,10 +146,10 @@ int main(int argc, char** argv) {
     double minThread = 1e30;
     for (int i = 0; i < 5; ++i) {
       memset(output_thread, 0, width * height * sizeof(int));
-        double startTime = CycleTimer::currentSeconds();
+        auto startTime = std::chrono::high_resolution_clock::now();
         mandelbrotThread(numThreads, x0, y0, x1, y1, width, height, maxIterations, output_thread);
-        double endTime = CycleTimer::currentSeconds();
-        minThread = std::min(minThread, endTime - startTime);
+        auto endTime = std::chrono::high_resolution_clock::now();
+        minThread = std::min(minThread, std::chrono::duration_cast<std::chrono::duration<double>>(endTime - startTime).count());
     }
 
     printf("[mandelbrot thread]:\t\t[%.3f] ms\n", minThread * 1000);

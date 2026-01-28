@@ -1,0 +1,21 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-m64",
+      "-I../common",
+      "-Iobjs/",
+      "-O3",
+      "-std=c++11",
+      "-Wall",
+      "-fPIC",
+      "-c",
+      "-o",
+      "objs/main.o",
+      "main.cpp"
+    ],
+    "directory": "/home/fredkeira/projects/Ai_Infra/cs149/assignments/asst1-master/prog1_mandelbrot_threads",
+    "file": "/home/fredkeira/projects/Ai_Infra/cs149/assignments/asst1-master/prog1_mandelbrot_threads/main.cpp",
+    "output": "/home/fredkeira/projects/Ai_Infra/cs149/assignments/asst1-master/prog1_mandelbrot_threads/objs/main.o"
+  }
+]
