@@ -16,7 +16,12 @@ class RiverSwim:
         # Configure reward function
         R = np.zeros((self.num_states, self.num_actions))
         R[0, 0] = 0.005
-        R[5, 1] = 1.
+        R[5, 1] = 1. 
+        '''
+        这里是在定义immediate reward  
+        R[0,0]是在s1 往左拿0.005的奖励
+        R[0,0]是在s2 往右拿1的奖励
+        '''
 
         # Configure transition function
         T = np.zeros((self.num_states, self.num_actions, self.num_states))
@@ -25,11 +30,22 @@ class RiverSwim:
         T[0, 0, 0] = 1.
         T[0, 1, 0] = 0.6
         T[0, 1, 1] = 0.4
+        '''
+        这里的意思是 
+        在state1, 往左游, 还在state1的概率1
+        在state1, 往右游, 在state2的概率0.6
+        在state1, 往右游, 还在state1的概率0.4
+        '''
 
         T[5, 1, 5] = 0.6
         T[5, 1, 4] = 0.4
         T[5, 0, 4] = 1.
-
+        '''
+        这里的意思是 
+        在state5, 往右游, 还在state5的概率0.6
+        在state5, 往右游, 在state2的概率0.4
+        在state5, 往左游, 在state1的概率1
+        '''
         # Encode intermediate state transitions
         for s in range(1, self.num_states - 1):
             left, right = 0, 1

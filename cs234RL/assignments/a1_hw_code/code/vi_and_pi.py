@@ -25,9 +25,12 @@ def bellman_backup(state, action, R, T, gamma, V):
     backup_val = 0.
     ############################
     # YOUR IMPLEMENTATION HERE #
-
+    part2_sum = 0
+    num_states = V.shape[0]
+    for i in range(num_states):
+        part2_sum += T[state, action, i] * V[i] 
+    backup_val = R[state,action] + part2_sum
     ############################
-
     return backup_val
 
 def policy_evaluation(policy, R, T, gamma, tol=1e-3):
