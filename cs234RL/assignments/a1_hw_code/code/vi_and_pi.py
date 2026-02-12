@@ -29,7 +29,7 @@ def bellman_backup(state, action, R, T, gamma, V):
     num_states = V.shape[0]
     for i in range(num_states):
         part2_sum += T[state, action, i] * V[i] 
-    backup_val = R[state,action] + part2_sum
+    backup_val = R[state,action] + gamma * part2_sum
     ############################
     return backup_val
 
@@ -54,24 +54,40 @@ def policy_evaluation(policy, R, T, gamma, tol=1e-3):
 
     ############################
     # YOUR IMPLEMENTATION HERE #
-    difference = 1 # initial number
+    # difference = 1 # initial number
+    # while(difference > tol):
+    #     value_function_minus1 = value_function.copy()
+    #     for state in range(num_states):
+    #         # 先拷贝一下直接更新 原value function
+            
+    #         # 选取动作向左边还是向右
+    #         # action
+    #         action = policy[state]
+    #         current_reward = R[state,action]
+            
+    #         future_reward_sum = 0
+    #         for state_new in range(num_states):
+    #             future_reward_sum += gamma * T[state,action,state_new] * value_function_minus1[state_new]
+            
+    #         value_function[state] = current_reward + future_reward_sum 
+    #     difference = np.max(np.abs(value_function - value_function_minus1))
+    ############################
+    difference = 1
     while(difference > tol):
         value_function_minus1 = value_function.copy()
         for state in range(num_states):
-            # 先拷贝一下直接更新 原value function
-            
-            # 选取动作向左边还是向右
-            # action
             action = policy[state]
-            current_reward = R[state,action]
-            
-            future_reward_sum = 0
-            for state_new in range(num_states):
-                future_reward_sum += gamma * T[state,action,state_new] * value_function_minus1[state_new]
-            
-            value_function[state] = current_reward + future_reward_sum 
-        difference = np.max(np.abs(value_function,value_function_minus1))
-    ############################
+            value_function[state] = bellman_backup(state=state,
+                                                    action=action,
+                                                    R=R,
+                                                    T=T,
+                                                    gamma=gamma,
+                                                    V=value_function_minus1
+                                                    )
+        difference = np.max(np.abs(value_function - value_function_minus1))
+    ############################                
+    
+    ######
     return value_function
 
 
@@ -95,7 +111,18 @@ def policy_improvement(policy, R, T, V_policy, gamma):
 
     ############################
     # YOUR IMPLEMENTATION HERE #
-
+    for state in range(num_states):
+        q_vals = np.zeros(num_actions)
+        for action in range(num_actions):
+            q_vals[action] = bellman_backup(
+                                            state=state,
+                                            action=action,
+                                            R=R,
+                                            T=T,
+                                            gamma=gamma,
+                                            V=V_policy
+                                            )
+        new_policy[state] = int(np.argmax(q_vals)) # 贪心选最大Q
     ############################
     return new_policy
 
