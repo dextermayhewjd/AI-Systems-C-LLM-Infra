@@ -49,11 +49,28 @@ def policy_evaluation(policy, R, T, gamma, tol=1e-3):
     value_function: np.array (num_states)
     """
     num_states, num_actions = R.shape
+    # 初始化 V_0(s) = 0
     value_function = np.zeros(num_states)
 
     ############################
     # YOUR IMPLEMENTATION HERE #
-
+    difference = 1 # initial number
+    while(difference > tol):
+        value_function_minus1 = value_function.copy()
+        for state in range(num_states):
+            # 先拷贝一下直接更新 原value function
+            
+            # 选取动作向左边还是向右
+            # action
+            action = policy[state]
+            current_reward = R[state,action]
+            
+            future_reward_sum = 0
+            for state_new in range(num_states):
+                future_reward_sum += gamma * T[state,action,state_new] * value_function_minus1[state_new]
+            
+            value_function[state] = current_reward + future_reward_sum 
+        difference = np.max(np.abs(value_function,value_function_minus1))
     ############################
     return value_function
 
