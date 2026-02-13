@@ -149,7 +149,30 @@ def policy_iteration(R, T, gamma, tol=1e-3):
     policy = np.zeros(num_states, dtype=int)
     ############################
     # YOUR IMPLEMENTATION HERE #
-
+    # 步骤1
+    i = 0
+    # 步骤2 初始化random policy
+    for state in range(num_states):
+        policy[state] = np.random.randint(0,num_actions)
+    
+    policy_old = np.zeros(num_states, dtype=int)
+    while(i==0 or np.max(np.abs(policy-policy_old))>tol):
+        policy_old = policy.copy()
+        V_policy = policy_evaluation(
+                            policy=policy_old,
+                            R=R,
+                            T=T,
+                            gamma=gamma,
+                            tol=tol
+                            )
+        policy = policy_improvement(
+                            policy=policy_old,
+                            R=R,
+                            T=T,
+                            V_policy=V_policy,
+                            gamma=gamma
+                            )
+        i+=1
     ############################
     return V_policy, policy
 
@@ -173,7 +196,41 @@ def value_iteration(R, T, gamma, tol=1e-3):
     policy = np.zeros(num_states, dtype=int)
     ############################
     # YOUR IMPLEMENTATION HERE #
+    k = 0
+    value_function_old = np.zeros(num_states)
+    while(k==0 or np.max(np.abs(value_function - value_function_old))>tol):
+        value_function_old = value_function.copy()
+        for state in range(num_states):
+            value_s_max = -np.inf
+            for action in range(num_actions):
+                value_s = bellman_backup(
+                            state=state,
+                            action=action,
+                            R=R,
+                            T=T,
+                            gamma=gamma,
+                            V=value_function_old
+                          )
+                value_s_max = max(value_s_max, value_s)
 
+            value_function[state] = value_s_max
+        k += 1
+    for state in range(num_states):
+        best_action = 0
+        highest_reward = -np.inf
+        for action in range(num_actions):
+            q_a_reward = bellman_backup(
+                                        state=state,
+                                        action=action,
+                                        R=R,
+                                        T=T,
+                                        gamma=gamma,
+                                        V=value_function)
+            if(q_a_reward>highest_reward):
+                highest_reward = q_a_reward
+                best_action = action
+        policy[state] = best_action
+        
     ############################
     return value_function, policy
 
